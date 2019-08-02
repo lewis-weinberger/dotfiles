@@ -99,13 +99,15 @@
 ;; Magit
 (use-package magit
   :ensure t
-  :bind (("C-x g" . magit-status)))
+  :bind (("C-x g" . magit-status))
+  )
 
 ;; Which-key
 (use-package which-key
   :ensure t
   :config
-  (which-key-mode 1))
+  (which-key-mode 1)
+  )
 
 ;; Base16 colour scheme
 (use-package base16-theme
@@ -113,7 +115,8 @@
   :init
   (setq base16-distinct-fringe-background nil)
   :config
-  (load-theme 'base16-eighties t))
+  (load-theme 'base16-eighties t)
+  )
 
 ;; Syntax Checking
 (use-package flycheck
@@ -123,18 +126,21 @@
   (setq flycheck-check-syntax-automatically '(mode-enabled save))
   )
 
-;; Rust-mode
+;; Inline error display
+(use-package flycheck-inline
+  :ensure t
+  :config
+  (global-flycheck-inline-mode)
+  )
+
+;; Rust;; Rust-mode
 (use-package rust-mode
   :ensure t
   :defer t
-  :init
-  (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
+  :mode ("\\.rs\\'" . rust-mode)
   :config
-  (setq rust-format-on-save t)
   (use-package flycheck-rust
     :ensure t
-    :defer t
-    :init
     :hook (flycheck-mode . flycheck-rust-setup)
     )
   )
