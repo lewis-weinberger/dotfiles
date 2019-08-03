@@ -61,13 +61,11 @@
 ;; Install 'use-package' if necessary
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
-  (package-install 'use-package)
-  )
+  (package-install 'use-package))
 
 ;; Enable use-package
 (eval-when-compile
-  (require 'use-package)
-  )
+  (require 'use-package))
 
 ;; Evil
 (use-package evil
@@ -86,28 +84,24 @@
                   calc-mode
                   magit-mode))
     (add-to-list 'evil-emacs-state-modes mode))
-  (evil-mode 1)
-  )
+  (evil-mode 1))
 
 ;; Dired-sidebar
 (use-package dired-sidebar
   :bind (("C-x C-n" . dired-sidebar-toggle-sidebar))
   :ensure t
-  :commands (dired-sidebar-toggle-sidebar)
-  )
+  :commands (dired-sidebar-toggle-sidebar))
 
 ;; Magit
 (use-package magit
   :ensure t
-  :bind (("C-x g" . magit-status))
-  )
+  :bind (("C-x g" . magit-status)))
 
 ;; Which-key
 (use-package which-key
   :ensure t
   :config
-  (which-key-mode 1)
-  )
+  (which-key-mode 1))
 
 ;; Base16 colour scheme
 (use-package base16-theme
@@ -115,23 +109,20 @@
   :init
   (setq base16-distinct-fringe-background nil)
   :config
-  (load-theme 'base16-eighties t)
-  )
+  (load-theme 'base16-eighties t))
 
 ;; Syntax Checking
 (use-package flycheck
   :ensure t
   :init (global-flycheck-mode)
   :config
-  (setq flycheck-check-syntax-automatically '(mode-enabled save))
-  )
+  (setq flycheck-check-syntax-automatically '(mode-enabled save)))
 
 ;; Inline error display
 (use-package flycheck-inline
   :ensure t
   :config
-  (global-flycheck-inline-mode)
-  )
+  (global-flycheck-inline-mode))
 
 ;; Rust;; Rust-mode
 (use-package rust-mode
@@ -141,9 +132,7 @@
   :config
   (use-package flycheck-rust
     :ensure t
-    :hook (flycheck-mode . flycheck-rust-setup)
-    )
-  )
+    :hook (flycheck-mode . flycheck-rust-setup)))
 
 ;; LaTex
 (use-package tex
@@ -153,8 +142,7 @@
   (setq font-latex-fontify-script nil)
   (setq font-latex-fontify-sectioning 'color)
   (setq TeX-auto-save t)
-  (setq TeX-PDF-mode t)
-  )
+  (setq TeX-PDF-mode t))
 
 ;; Smart modeline
 (use-package smart-mode-line
@@ -163,8 +151,7 @@
   (setq sml/no-confirm-load-theme t)
   :config
   (setq sml/theme 'dark)
-  (sml/setup)
-  )
+  (sml/setup))
 
 ;; Ido
 (setq ido-enable-flex-matching t)
