@@ -34,16 +34,13 @@
 ;; Show column number
 (column-number-mode 1)
 
-;; Wider fringes
-(fringe-mode 16)
+;; Line numbers
+(when (version<= "26.0.50" emacs-version)
+  (add-hook 'prog-mode-hook #'display-line-numbers-mode)
+  (add-hook 'text-mode-hook #'display-line-numbers-mode))
 
-;; Indicate column 80 position when in prog-mode
-;; https://emacs.stackexchange.com/a/149
-(defun prog-mode-header-line ()
-  "Use the header line to indicate column 80."
-  (setq header-line-format
-        (list "  " (make-string 79 ? ) "↓")))
-(add-hook 'prog-mode-hook #'prog-mode-header-line)
+;; ibuffer
+(define-key global-map [remap list-buffers] 'ibuffer)
 
 ;; PACKAGES -------------------------------------------------------------------
 
@@ -124,7 +121,7 @@
   :config
   (global-flycheck-inline-mode))
 
-;; Rust;; Rust-mode
+;; Rust
 (use-package rust-mode
   :ensure t
   :defer t
@@ -157,5 +154,20 @@
 (setq ido-enable-flex-matching t)
 (setq ido-everywhere t)
 (ido-mode 1)
+
+;; Deadgrep
+(use-package deadgrep
+  :ensure t
+  :config
+  (global-set-key (kbd "C-c g") #'deadgrep))
+
+;; Dashboard
+(use-package dashboard
+  :ensure t
+  :config
+  (dashboard-setup-startup-hook)
+  (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
+  (setq dashboard-startup-banner 'logo)
+  (setq dashboard-set-navigator t))
 
 ;;; init.el ends here
