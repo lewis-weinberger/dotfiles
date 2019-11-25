@@ -1,0 +1,19 @@
+(use-modules (ice-9 readline) 
+             (ice-9 pretty-print)
+             (ice-9 colorized)
+             (system repl common))
+
+;; Colourised REPL
+(activate-colorized)
+
+;; Custom REPL prompt
+(repl-default-prompt-set! "[Scheme]\x01\x1b[31m\x02 λ \x01\x1b[33m\x02>\x01\x1b[0m\x02 ")
+
+;; Readline
+(activate-readline)
+
+;; Turn off backtrace printing on error
+(repl-default-option-set! 'on-error 'report)
+
+;; Working directory
+(add-to-load-path ".")
