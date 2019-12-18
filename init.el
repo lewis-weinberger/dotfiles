@@ -42,6 +42,10 @@
 ;; ibuffer
 (define-key global-map [remap list-buffers] 'ibuffer)
 
+;; Tabs
+(setq tab-width 4)
+(setq-default c-basic-offset 4)
+
 ;; PACKAGES -------------------------------------------------------------------
 
 ;; Update package-archive lists
@@ -79,9 +83,18 @@
                   dired-mode
                   org-mode
                   calc-mode
-                  magit-mode))
+                  magit-mode
+		  eshell-mode
+		  ielm-mode))
     (add-to-list 'evil-emacs-state-modes mode))
   (evil-mode 1))
+
+;; Rainbow delimiters
+(use-package rainbow-delimiters
+  :ensure t
+  :init
+  (progn
+    (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)))
 
 ;; Dired-sidebar
 (use-package dired-sidebar
@@ -106,7 +119,7 @@
   :init
   (setq base16-distinct-fringe-background nil)
   :config
-  (load-theme 'base16-eighties t))
+  (load-theme 'base16-default-dark t))
 
 ;; Syntax Checking
 (use-package flycheck
@@ -131,6 +144,10 @@
     :ensure t
     :hook (flycheck-mode . flycheck-rust-setup)))
 
+;; Racket
+(use-package racket-mode
+  :ensure t)
+
 ;; LaTex
 (use-package tex
   :defer t
@@ -141,14 +158,10 @@
   (setq TeX-auto-save t)
   (setq TeX-PDF-mode t))
 
-;; Smart modeline
-(use-package smart-mode-line
+;; Octave-mode
+(use-package octave
   :ensure t
-  :init
-  (setq sml/no-confirm-load-theme t)
-  :config
-  (setq sml/theme 'dark)
-  (sml/setup))
+  :mode ("\\.m\\'" . octave-mode))
 
 ;; Ido
 (setq ido-enable-flex-matching t)
@@ -164,10 +177,24 @@
 ;; Dashboard
 (use-package dashboard
   :ensure t
+  :init
+  (use-package all-the-icons
+    :ensure t)
   :config
   (dashboard-setup-startup-hook)
   (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
-  (setq dashboard-startup-banner 'logo)
-  (setq dashboard-set-navigator t))
+  (setq dashboard-startup-banner 1)
+  (setq dashboard-set-navigator t)
+  (setq dashboard-center-content t)
+  (setq dashboard-set-heading-icons t)
+  (setq dashboard-set-file-icons t)
+  (setq dashboard-items '((recents  . 5)
+                          (bookmarks . 5))))
+
+;; Turn off bold fonts
+(mapc
+  (lambda (face)
+    (set-face-attribute face nil :weight 'normal))
+  (face-list))
 
 ;;; init.el ends here
