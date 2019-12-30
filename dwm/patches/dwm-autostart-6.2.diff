@@ -1,3 +1,5 @@
+https://dwm.suckless.org/patches/autostart/
+
 diff --git a/dwm.c b/dwm.c
 index 4465af1..749388f 100644
 --- a/dwm.c

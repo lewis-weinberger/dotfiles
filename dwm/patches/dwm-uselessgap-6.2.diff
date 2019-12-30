@@ -1,12 +1,4 @@
-From 58a5ece9406ca6c90dc362617c065e4aac19417f Mon Sep 17 00:00:00 2001
-From: Cyril Cressent <cyril@cressent.org>
-Date: Wed, 3 Jul 2019 21:33:45 -0700
-Subject: [PATCH] Port the uselessgap patch to 6.2
-
----
- config.def.h |  1 +
- dwm.c        | 36 ++++++++++++++++++++++++++++++------
- 2 files changed, 31 insertions(+), 6 deletions(-)
+https://dwm.suckless.org/patches/uselessgap/
 
 diff --git a/config.def.h b/config.def.h
 index 1c0b587..b11471d 100644

@@ -1,13 +1,4 @@
-From f2d5975051daf2b4496a0b0193381e0d6c55a80b Mon Sep 17 00:00:00 2001
-From: Jordan Cran <jordan@instantepiphany.com.au>
-Date: Sun, 17 Feb 2019 11:57:35 +1100
-Subject: [PATCH] Add scrollback (4000 line history default) for 0.8.1
-
----
- config.def.h |   2 +
- st.c         | 119 ++++++++++++++++++++++++++++++++++++++++-----------
- st.h         |   2 +
- 3 files changed, 98 insertions(+), 25 deletions(-)
+https://st.suckless.org/patches/scrollback/
 
 diff --git a/config.def.h b/config.def.h
 index 82b1b09..27d42ca 100644
