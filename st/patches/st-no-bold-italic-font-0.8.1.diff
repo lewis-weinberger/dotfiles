@@ -1,0 +1,17 @@
+diff --git a/x.c b/x.c
+index c343ba2..7762fcd 100644
+--- a/x.c
++++ b/x.c
+@@ -954,12 +954,10 @@ xloadfonts(char *fontstr, double fontsize)
+ 	win.ch = ceilf(dc.font.height * chscale);
+ 
+ 	FcPatternDel(pattern, FC_SLANT);
+-	FcPatternAddInteger(pattern, FC_SLANT, FC_SLANT_ITALIC);
+ 	if (xloadfont(&dc.ifont, pattern))
+ 		die("st: can't open font %s\n", fontstr);
+ 
+ 	FcPatternDel(pattern, FC_WEIGHT);
+-	FcPatternAddInteger(pattern, FC_WEIGHT, FC_WEIGHT_BOLD);
+ 	if (xloadfont(&dc.ibfont, pattern))
+ 		die("st: can't open font %s\n", fontstr);
+ 
