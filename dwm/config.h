@@ -12,11 +12,11 @@ static const char col_gray1[]       = "#151515";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
 static const char col_gray4[]       = "#d0d0d0";
-static const char col_red[]        = "#ac4142";
+static const char col_red[]         = "#ac4142";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_gray1, col_red,  col_red  },
+	[SchemeSel]  = { col_gray1, col_red,   col_red  },
 };
 
 /* tagging */
@@ -59,7 +59,7 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_red, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "st", NULL };
-static const char *slockcmd[] = { "slock", NULL };
+static const char *lockcmd[] = { "xscreensaver-command", "-lock", NULL };
 static const char *emacscmd[] = { "emacsclient", "-c", NULL };
 static const char *roficmd[]  = { "rofi", "-modi", "run", "-show", "run", 
   NULL };
@@ -70,7 +70,7 @@ static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY|ShiftMask,             XK_l,      spawn,          {.v = slockcmd } },
+	{ MODKEY|ShiftMask,             XK_l,      spawn,          {.v = lockcmd } },
 	{ MODKEY|ShiftMask,             XK_e,      spawn,          {.v = emacscmd } },
 	{ MODKEY|ShiftMask,             XK_r,      spawn,          {.v = roficmd } },
 	{ MODKEY|ShiftMask,             XK_d,      spawn,          {.v = rofidcmd } },
