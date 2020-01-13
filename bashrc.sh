@@ -35,6 +35,8 @@ function reset_prompt {
 
 # Check if shell running interactively
 if [[ "$-" == *"i"* ]]; then
+    # Delete key
+    tput smkx
     
     # Git (ask for password in terminal)
     unset SSH_ASKPASS
