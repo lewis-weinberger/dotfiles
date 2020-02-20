@@ -1,4 +1,4 @@
-;;; init.el --- drvog's Emacs config
+;;; init.el --- Lewis Weinberger's Emacs config
 
 ;;; Commentary:
 ;; An initialisation file for Emacs!
@@ -39,12 +39,36 @@
   (add-hook 'prog-mode-hook #'display-line-numbers-mode)
   (add-hook 'text-mode-hook #'display-line-numbers-mode))
 
-;; ibuffer
-(define-key global-map [remap list-buffers] 'ibuffer)
+;; Selecting regions a line at a time
+(defun select-line-up ()
+  "Select a line from end to start."
+  (interactive)
+  (set-mark (line-end-position))
+  (beginning-of-line)
+  (activate-mark))
 
-;; Tabs
-(setq tab-width 4)
-(setq-default c-basic-offset 4)
+(defun select-line-down ()
+  "Select a line from start to end, including newline."
+  (interactive)
+  (set-mark (line-beginning-position))
+  (forward-line)
+  (activate-mark))
+
+;; Select whole line (including newline)
+(global-set-key (kbd "C-c <up>") 'select-line-up)
+(global-set-key (kbd "C-c <down>") 'select-line-down)
+
+;; Insert block
+(global-set-key (kbd "C-c i") 'string-insert-rectangle)
+
+;; Code style
+(setq-default python-indent-offset 4)
+(setq-default c-default-style "gnu")
+
+;; Spellchecking in Latex
+(setq ispell-local-dictionary "british")
+(add-hook 'LaTeX-mode-hook '(flyspell-mode t))
+
 
 ;; PACKAGES -------------------------------------------------------------------
 
@@ -68,26 +92,14 @@
 (eval-when-compile
   (require 'use-package))
 
-;; Evil
-(use-package evil
+;; helm
+(use-package helm
   :ensure t
-  :init
-  (setq evil-insert-state-cursor '(bar "red"))
-  (setq evil-normal-state-cursor '(box "red"))
-  (setq evil-emacs-state-cursor '(box "white"))
-  (setq evil-search-module 'evil-search)
-  (setq evil-vsplit-window-right t)
-  (setq evil-split-window-below t)
-  :config
-  (dolist (mode '(special-mode
-                  dired-mode
-                  org-mode
-                  calc-mode
-                  magit-mode
-		  eshell-mode
-		  ielm-mode))
-    (add-to-list 'evil-emacs-state-modes mode))
-  (evil-mode 1))
+  :bind (("M-x" . helm-M-x)
+         ("C-x C-f" . helm-find-files)
+         ("C-x b" . helm-buffers-list)
+	 ("C-s" . helm-occur))
+  :config (helm-mode 1))
 
 ;; Rainbow delimiters
 (use-package rainbow-delimiters
@@ -112,6 +124,15 @@
   :ensure t
   :config
   (which-key-mode 1))
+
+;; Modeline
+(use-package smart-mode-line
+  :ensure t
+  :init
+  (setq sml/no-confirm-load-theme t)
+  :config
+  (setq sml/theme 'respectful)
+  (sml/setup))
 
 ;; Base16 colour scheme
 (use-package base16-theme
@@ -163,17 +184,6 @@
   :ensure t
   :mode ("\\.m\\'" . octave-mode))
 
-;; Ido
-(setq ido-enable-flex-matching t)
-(setq ido-everywhere t)
-(ido-mode 1)
-
-;; Deadgrep
-(use-package deadgrep
-  :ensure t
-  :config
-  (global-set-key (kbd "C-c g") #'deadgrep))
-
 ;; Dashboard
 (use-package dashboard
   :ensure t
@@ -191,7 +201,7 @@
   (setq dashboard-items '((recents  . 5)
                           (bookmarks . 5))))
 
-;; Turn off bold fonts
+;; Turn off bold fonts (after package loading)
 (mapc
   (lambda (face)
     (set-face-attribute face nil :weight 'normal))
