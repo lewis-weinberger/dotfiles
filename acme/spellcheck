@@ -22,5 +22,5 @@ aspell pipe --lang=$LANG --mode=$MODE | \
 grep '[a-zA-Z]\+ [0-9]\+ [0-9]\+' -oh | \
 grep '[a-zA-Z]\+' -o | \
 while read word; do 
-    grep -on "\<$word\>" $file | awk -v x=$file -F: '{ print x":"$1" "$2}'; 
+    grep -oub "\<$word\>" $file | awk -v x=$file -F: '{ print x":#"$1" "$2}'; 
 done
