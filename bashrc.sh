@@ -1,13 +1,17 @@
 #!/bin/bash
 
-# Emacs
-export ALTERNATE_EDITOR=""
-export EDITOR="emacsclient -nw"
-export VISUAL="emacsclient -c -n"
+# Plan 9 from User Space
+export PLAN9=$HOME/plan9port
 
 # Paths
 export PATH=$HOME/.cargo/bin:$PATH
 export PATH=$HOME/.local/bin:$PATH
+export PATH=$PATH:$PLAN9/bin
+export MANPATH=$(manpage -g):$PLAN9/man
+
+# Editor
+export EDITOR=B
+unset FCEDIT VISUAL
 
 # Python
 export PYTHONSTARTUP=$HOME/.pythonrc.py
@@ -37,10 +41,10 @@ function reset_prompt {
 if [[ "$-" == *"i"* ]]; then
     # Delete key
     tput smkx
-    
+
     # Git (ask for password in terminal)
     unset SSH_ASKPASS
-    
+
     # Readline history search
     bind '"\e[A": history-search-backward'
     bind '"\e[B": history-search-forward'
