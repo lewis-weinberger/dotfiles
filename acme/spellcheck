@@ -1,0 +1,26 @@
+#!/bin/bash
+# Spell check with Acme friendly output, using GNU aspell
+# See https://stackoverflow.com/a/6404478 for original method
+
+# Persistent settings (change as appropriate)
+LANG=en_GB
+MODE=tex
+
+if [ $# -eq 0 ]; then
+    if [ -z $samfile ]; then
+        echo "Usage: spellcheck [FILE]"
+        exit 1
+    else
+        file=$samfile
+    fi
+else
+    file=$1
+fi
+
+cat $file | \
+aspell pipe --lang=$LANG --mode=$MODE | \
+grep '[a-zA-Z]\+ [0-9]\+ [0-9]\+' -oh | \
+grep '[a-zA-Z]\+' -o | \
+while read word; do 
+    grep -oub "\<$word\>" $file | awk -v x=$file -F: '{ print x":#"$1" "$2}'; 
+done
