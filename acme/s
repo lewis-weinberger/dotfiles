@@ -1,0 +1,8 @@
+#!/bin/sh
+# Sam startup script
+
+export PATH=$PATH:$PLAN9/bin
+export font=$PLAN9/font/lucsans/typeunicode.7.font
+
+pgrep plumber > /dev/null || plumber &
+sam -a $@
