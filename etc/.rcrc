@@ -12,7 +12,7 @@ tab='   '
 prompt=($ps1 $tab)
 
 fn ls {
-    builtin ls '--color=auto' $*
+    /bin/ls '--color=auto' $*
 }
 
 fn cd {
