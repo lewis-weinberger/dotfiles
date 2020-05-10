@@ -1,4 +1,4 @@
-;;; init.el --- Lewis Weinberger's Emacs config
+;;; Emacs startup file
 
 ;;; Commentary:
 ;; An initialisation file for Emacs!

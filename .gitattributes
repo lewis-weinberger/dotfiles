@@ -1,1 +1,7 @@
 *.h linguist-language=C
+.rcrc linguist-language=Shell
+.bashrc linguist-language=Shell
+.emacs linguist-language=Emacs-Lisp
+.guile linguist-language=Scheme
+bin/* linguist-language=Shell
+

@@ -1,12 +1,17 @@
-# Userland Configuration
+# Userspace
+See also [lewis-weinberger/rice](https://github.com/lewis-weinberger/rice).
 
-## [GNU](https://www.gnu.org/software/software.html)
+## Configuration
 
-- Bash: [~/.bashrc](./bashrc.sh)  
-- Emacs: [~/.emacs](./init.el) 
-- Guile Scheme: [~/.guile](./guile.scm) 
+- [.rcrc](./etc/.rcrc)
+- [.bashrc](./etc/.bashrc)  
+- [.emacs](./etc/.emacs) 
+- [.guile](./etc/.guile) 
+- [dwm](./etc/dwm) 
+- [st](./etc/st)
 
-## [Suckless](https://suckless.org/)
+## Scripts
 
-- dynamic window manager: [dwm](./dwm) 
-- simple terminal: [st](./st)
+- [a](./bin/a), [s](./bin/s): acme and sam
+- [clint](./bin/clint), [spellcheck](./bin/spellcheck): linting
+

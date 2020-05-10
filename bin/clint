@@ -1,0 +1,22 @@
+#!/usr/local/plan9/bin/rc
+# Lint C source
+
+plan9=/usr/local/plan9
+
+include=-I$plan9/include
+cc=gcc
+opt=-fsyntax-only
+cflags=('-Wall' '-Werror' '-Wstrict-prototypes' '-Wmissing-prototypes' '-Wshadow' '-Wconversion')
+
+if (~ $#* 0) {
+	if (~ $#samfile 0) {
+		echo 'Usage: clint [FILE]'
+		exit 1
+	}
+	if not
+		file=$samfile
+}
+if not
+	file=$1
+
+$cc $opt $include $cflags $file

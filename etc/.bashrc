@@ -1,4 +1,4 @@
-#!/bin/bash
+# Bash startup file
 
 # Plan 9 from User Space
 export PLAN9=$HOME/plan9port
@@ -49,10 +49,6 @@ if [[ "$-" == *"i"* ]]; then
     bind '"\e[A": history-search-backward'
     bind '"\e[B": history-search-forward'
 
-    # Emacs daemon
-    if ! emacsclient -e 0 >&/dev/null ; then
-	emacs --daemon
-    fi
     alias edit="$EDITOR"
 
     # Set prompt

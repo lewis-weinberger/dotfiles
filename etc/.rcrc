@@ -1,0 +1,26 @@
+# rc shell startup script (executed by login shells)
+
+plan9=/usr/local/plan9
+font=$plan9/font/lucsans/typeunicode.7.font
+tabstop=4
+acmeshell=/usr/bin/rcsh
+
+path=($path $home/.local/bin $home/go/bin $home/Applications/bin $plan9/bin)
+
+ps1='% '
+tab='   '
+prompt=($ps1 $tab)
+
+fn ls {
+    builtin ls '--color=auto' $*
+}
+
+fn cd {
+	builtin cd $1 &&
+	switch ($#*) {
+		case 0
+			prompt=($ps1 $tab)
+		case * 
+			prompt=(`{basename `{pwd}}^$ps1 $tab)
+	}
+}
