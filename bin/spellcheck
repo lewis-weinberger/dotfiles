@@ -1,8 +1,7 @@
 #!/usr/local/plan9/bin/rc
 # Spell check with Acme friendly output
 
-lang=en_GB    # British English
-mode=t        # TeX mode
+lang=en_GB                # British English
 
 if (~ $#* 0) {
 	if (~ $#samfile 0) {
@@ -15,8 +14,8 @@ if (~ $#* 0) {
 if not
 	file=$1
 
-misspelt=`{aspell pipe -l $lang -$mode < $file | awk '/[a-zA-Z]+ [0-9]+ [0-9]+/{ print $2 }'}
+misspelt=`{aspell pipe --dont-suggest -l $lang < $file | awk '/[a-zA-Z]+ [0-9]+ [0-9]+/{ print $2 }'}
 
 for (word in $misspelt) {
-	grep -oub $word $file | awk -v 'x='$file -F: '{ print x":#"$1" "$2 }'
+	grep -woub $word $file | awk -v 'x='$file -F: '{ print x":#"$1" "$2 }'
 }
