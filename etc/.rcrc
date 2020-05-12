@@ -6,6 +6,7 @@ tabstop=4
 acmeshell=/usr/bin/rcsh
 
 path=($path $home/.local/bin $home/go/bin $home/Applications/bin $plan9/bin)
+MANPATH=`{manpath -q}^:$plan9/man
 
 ps1='% '
 tab='   '
