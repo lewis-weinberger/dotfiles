@@ -5,6 +5,7 @@ font=$plan9/font/lucsans/typeunicode.7.font
 tabstop=4
 acmeshell=/usr/bin/rcsh
 
+history=$home/.rcsh_history
 path=($path $home/.local/bin $home/go/bin $home/Applications/bin $plan9/bin)
 MANPATH=`{manpath -q}^:$plan9/man
 
