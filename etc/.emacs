@@ -33,6 +33,7 @@
 (setq-default ispell-local-dictionary "british")
 (setq-default inhibit-startup-screen t)
 (setq-default cursor-type 'bar)
+(setq-default mouse-autoselect-window t)
 
 ;; Custom bindings
 (global-set-key (kbd "C-c e") 'eshell)
@@ -41,9 +42,11 @@
 (global-set-key (kbd "C-c <up>") 'select-line-up)
 (global-set-key (kbd "C-c <down>") 'select-line-down)
 (global-set-key (kbd "C-c i") 'string-insert-rectangle)
+(global-set-key (kbd "C-c p") 'password-store-copy)
 
 ;; Hooks
 (add-hook 'LaTeX-mode-hook '(flyspell-mode t))
+(add-hook 'org-mode-hook '(set-input-method "TeX"))
 
 
 ;; FUNCTIONS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -89,9 +92,6 @@
 
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
-
-(use-package aggressive-indent
-  :hook (prog-mode . aggressive-indent-mode))
 
 (use-package rust-mode
   :mode "\\.rs\\'")
