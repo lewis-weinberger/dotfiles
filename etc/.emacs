@@ -46,7 +46,7 @@
 
 ;; Hooks
 (add-hook 'LaTeX-mode-hook '(flyspell-mode t))
-(add-hook 'org-mode-hook '(set-input-method "TeX"))
+(add-hook 'org-mode-hook (lambda () (set-input-method "TeX")))
 
 
 ;; FUNCTIONS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
