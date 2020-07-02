@@ -34,6 +34,7 @@
 (setq-default inhibit-startup-screen t)
 (setq-default cursor-type 'bar)
 (setq-default mouse-autoselect-window t)
+(setq-default org-agenda-files '("~/Documents/Notes/"))
 
 ;; Custom bindings
 (global-set-key (kbd "C-c e") 'eshell)
@@ -43,9 +44,11 @@
 (global-set-key (kbd "C-c <down>") 'select-line-down)
 (global-set-key (kbd "C-c i") 'string-insert-rectangle)
 (global-set-key (kbd "C-c p") 'password-store-copy)
+(global-set-key (kbd "C-c a") 'org-agenda)
+(global-set-key (kbd "C-c r") 'eval-region)
 
 ;; Hooks
-(add-hook 'LaTeX-mode-hook '(flyspell-mode t))
+(add-hook 'text-mode-hook '(flyspell-mode t))
 (add-hook 'org-mode-hook (lambda () (set-input-method "TeX")))
 
 
@@ -77,10 +80,10 @@
   (activate-mark))
 
 
-;; EXTERNAL PACKAGES ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; PACKAGES ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-;; use-package setup: note packages must be installed before use!
+;; use-package setup: note external packages must be installed before use!
 (require 'package)
 (setq package-enable-at-startup nil)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
@@ -101,6 +104,18 @@
 
 (use-package haskell-mode
   :mode "\\.hs\\'")
+
+(use-package which-key
+  :config (which-key-mode 1))
+
+(use-package slime
+  :init (setq inferior-lisp-program "sbcl"))
+
+(use-package ido
+  :init
+  (setq-default ido-enable-flex-matching t)
+  (setq-default ido-everywhere t)
+  (ido-mode 1))
 
 
 ;;; .emacs ends here
