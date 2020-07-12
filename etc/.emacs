@@ -27,14 +27,23 @@
 
 
 ;; Miscellaneous settings
-(setq-default column-number-mode t)
-(setq-default python-indent-offset 4)
-(setq-default c-default-style "linux" c-basic-offset 4)
-(setq-default ispell-local-dictionary "british")
-(setq-default inhibit-startup-screen t)
+(setq python-indent-offset 4)
+(setq c-default-style "linux" c-basic-offset 4)
+(setq ispell-dictionary "british")
+(setq inhibit-startup-screen t)
+(setq mouse-autoselect-window t)
+(setq org-agenda-files '("~/Documents/Notes/"))
+
+;; Appearance
 (setq-default cursor-type 'bar)
-(setq-default mouse-autoselect-window t)
-(setq-default org-agenda-files '("~/Documents/Notes/"))
+(column-number-mode t)
+(scroll-bar-mode -1)
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(set-face-attribute 'fringe nil :background nil)
+(modify-all-frames-parameters
+ '((font . "Roboto Mono-14")
+   (internal-border-width . 16)))
 
 ;; Custom bindings
 (global-set-key (kbd "C-c e") 'eshell)
@@ -113,8 +122,8 @@
 
 (use-package ido
   :init
-  (setq-default ido-enable-flex-matching t)
-  (setq-default ido-everywhere t)
+  (setq ido-enable-flex-matching t)
+  (setq ido-everywhere t)
   (ido-mode 1))
 
 
