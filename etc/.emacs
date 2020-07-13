@@ -57,7 +57,7 @@
 (global-set-key (kbd "C-c r") 'eval-region)
 
 ;; Hooks
-(add-hook 'text-mode-hook '(flyspell-mode t))
+(add-hook 'text-mode-hook #'turn-on-flyspell)
 (add-hook 'org-mode-hook (lambda () (set-input-method "TeX")))
 
 
