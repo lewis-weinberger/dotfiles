@@ -1,0 +1,109 @@
+;; -*- lisp -*-
+(in-package :stumpwm)
+
+;;
+;; Startup commands
+;;
+
+(run-shell-command "xsetroot -solid grey30")
+
+;;
+;; Swank server for SLIME interaction
+;;
+
+(require :swank)
+(swank-loader:init)
+(swank:create-server :port 4004
+                     :style swank:*communication-style*
+                     :dont-close t)
+
+;;
+;; Miscellaneous
+;;
+
+(setf
+ *mouse-focus-policy* :sloppy
+ (getenv "GDK_CORE_DEVICE_EVENTS") "1" ; fix for GTK3
+ *window-border-style* :none)
+
+(grename "1")
+(gnewbg "2")
+(gnewbg "3")
+(gnewbg "4")
+
+;;
+;; Contrib
+;;
+
+(load-module "swm-gaps")
+(setf swm-gaps:*inner-gaps-size* 8)
+(swm-gaps:toggle-gaps)
+
+(load-module "pass")
+(load-module "cpu")
+(load-module "mem")
+
+;;
+;; Modeline
+;;
+
+(defun get-wifi ()
+  (string-trim
+   (string #\newline)
+   (run-shell-command "iw wlp4s0 station dump | awk '/signal:/{ print $2 }'" t)))
+
+(defun get-volume ()
+  (string-trim
+   (string #\newline)
+   (run-shell-command "amixer get Master | awk '/Mono/{ printf $4 }' | tr -d '[]'" t)))
+
+(setf
+ *window-format* "%m%s%c"
+ *group-format* "%s%t"
+ *mode-line-timeout* 1
+ *mode-line-position* :top
+ *mode-line-foreground-color* "#9EEEEE"
+ *mode-line-background-color* "#4E4E4E"
+ *mode-line-border-color* "#4E4E4E"
+ *screen-mode-line-format*
+ (list "[%g] %W"                             ; [Groups] Windows
+       "^>"                                  ; align remaining info on the right
+       "%C"                                  ; CPU
+       " | %M"                               ; Memory
+       " | NET:  " '(:eval (get-wifi))       ; WiFi
+       " dBm | VOL:  " '(:eval (get-volume)) ; Volume
+       " | %d"))                             ; Time
+
+(if (not (head-mode-line (current-head)))
+    (toggle-mode-line (current-screen) (current-head)))
+
+;;
+;; Keybindings
+;;
+
+(defcommand firefox () ()
+  "run firefox"
+  (run-or-raise "firejail firefox" '(:class "Firefox")))
+  
+(defcommand thunderbird () ()
+  "run thunderbird"
+  (run-or-raise "firejail thunderbird" '(:class "Thunderbird")))
+
+(defcommand terminal-emulator () ()
+  "run terminal emulator"
+  (run-or-raise "st -e /usr/bin/rcsh -l" '(:class "st-256color")))
+  
+(defcommand lock-screen () ()
+  "run xscreensaver-command"
+  (run-shell-command "xscreensaver-command -lock"))
+
+(defcommand password-manager () ()
+  "run pass"
+  (pass:pass-copy-menu))
+
+(define-key *root-map* (kbd "s-f") "firefox")
+(define-key *root-map* (kbd "s-t") "thunderbird")
+(define-key *root-map* (kbd "s-RET") "terminal-emulator")
+(define-key *root-map* (kbd "s-l") "lock-screen")
+(define-key *root-map* (kbd "s-p") "password-manager")
+
