@@ -41,6 +41,8 @@
 
 (load-module "pass")
 (load-module "cpu")
+(setf cpu:*acpi-thermal-zone*  ; use more reliable CPU package temp
+      '(:sysfs . #P"/sys/devices/virtual/thermal/thermal_zone2/temp"))
 (load-module "mem")
 
 ;;
