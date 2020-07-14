@@ -33,6 +33,7 @@
 (setq inhibit-startup-screen t)
 (setq mouse-autoselect-window t)
 (setq org-agenda-files '("~/Documents/Notes/"))
+(setq frame-resize-pixelwise t)
 
 ;; Appearance
 (setq-default cursor-type 'bar)
