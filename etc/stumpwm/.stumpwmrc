@@ -2,13 +2,13 @@
 (in-package :stumpwm)
 
 ;;
-;; Startup commands
+;; Startup commands -----------------------------------------------------------
 ;;
 
 (run-shell-command "xsetroot -solid grey30")
 
 ;;
-;; Swank server for SLIME interaction
+;; Swank server for SLIME interaction -----------------------------------------
 ;;
 
 (require :swank)
@@ -18,10 +18,11 @@
                      :dont-close t)
 
 ;;
-;; Miscellaneous
+;; Miscellaneous --------------------------------------------------------------
 ;;
 
 (setf
+ *message-window-gravity* :center
  *mouse-focus-policy* :sloppy
  (getenv "GDK_CORE_DEVICE_EVENTS") "1" ; fix for GTK3
  *window-border-style* :none)
@@ -32,7 +33,7 @@
 (gnewbg "4")
 
 ;;
-;; Contrib
+;; Contrib --------------------------------------------------------------------
 ;;
 
 (load-module "swm-gaps")
@@ -40,24 +41,35 @@
 (swm-gaps:toggle-gaps)
 
 (load-module "pass")
+
 (load-module "cpu")
 (setf cpu:*acpi-thermal-zone*  ; use more reliable CPU package temp
       '(:sysfs . #P"/sys/devices/virtual/thermal/thermal_zone2/temp"))
+
 (load-module "mem")
 
+(load-module "ttf-fonts")
+(set-font (make-instance 'xft:font
+	   :family "Roboto Mono"
+	   :subfamily "Regular"
+	   :size 11
+	   :antialias t))
+
 ;;
-;; Modeline
+;; Modeline -------------------------------------------------------------------
 ;;
 
 (defun get-wifi ()
   (string-trim
    (string #\newline)
-   (run-shell-command "iw wlp4s0 station dump | awk '/signal:/{ print $2 }'" t)))
+   (run-shell-command "iw wlp4s0 station dump | awk '/signal:/{ print $2 }'"
+		      t)))
 
 (defun get-volume ()
   (string-trim
    (string #\newline)
-   (run-shell-command "amixer get Master | awk '/Mono/{ printf $4 }' | tr -d '[]'" t)))
+   (run-shell-command "amixer get Master | awk '/Mono/{ printf $4 }' | tr -d '[]'"
+		      t)))
 
 (setf
  *window-format* "%m%s%c"
@@ -69,7 +81,7 @@
  *mode-line-border-color* "#4E4E4E"
  *screen-mode-line-format*
  (list "[%g] %W"                             ; [Groups] Windows
-       "^>"                                  ; align remaining info on the right
+       "^>"                                  ; align remaining on the right
        "%C"                                  ; CPU
        " | %M"                               ; Memory
        " | NET:  " '(:eval (get-wifi))       ; WiFi
@@ -80,7 +92,7 @@
     (toggle-mode-line (current-screen) (current-head)))
 
 ;;
-;; Keybindings
+;; Keybindings ----------------------------------------------------------------
 ;;
 
 (defcommand firefox () ()
@@ -103,9 +115,27 @@
   "run pass"
   (pass:pass-copy-menu))
 
+(defcommand tile-reveal () ()
+  "stumpwm:expose but without final selection"
+  (expose-tile nil (current-group)))
+
+(define-key *root-map* (kbd ".") "tile-reveal")
 (define-key *root-map* (kbd "s-f") "firefox")
 (define-key *root-map* (kbd "s-t") "thunderbird")
 (define-key *root-map* (kbd "s-RET") "terminal-emulator")
 (define-key *root-map* (kbd "s-l") "lock-screen")
 (define-key *root-map* (kbd "s-p") "password-manager")
 
+;;
+;; Remappings -----------------------------------------------------------------
+;;
+
+(define-remapped-keys
+    '(("(Firefox|Thunderbird)"
+       ("M-w" . "C-c")
+       ("C-w" . "C-x")
+       ("C-y" . "C-v"))
+      ("(st-256color)"
+       ("M-w" . "C-C")
+       ("C-w" . "C-X")
+       ("C-y" . "C-V"))))
