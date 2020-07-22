@@ -31,6 +31,8 @@
 (gnewbg "2")
 (gnewbg "3")
 (gnewbg "4")
+(gnewbg-float "5")
+(gnewbg-float "6")
 
 ;;
 ;; Contrib --------------------------------------------------------------------
@@ -139,3 +141,17 @@
        ("M-w" . "C-C")
        ("C-w" . "C-X")
        ("C-y" . "C-V"))))
+
+
+;;
+;; Hooks ----------------------------------------------------------------------
+;;
+
+(defun mode-line-scroll-groups (mode-line button x y)
+  "Scrolling in the modeline cycles through groups"
+  (declare (ignore mode-line x y))
+  (cond
+    ((= button 4) (gnext))
+    ((= button 5) (gprev))))
+
+(add-hook *mode-line-click-hook* 'mode-line-scroll-groups)
