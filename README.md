@@ -6,7 +6,9 @@ See also [lewis-weinberger/rice](https://github.com/lewis-weinberger/rice).
 - [.rcrc](./etc/.rcrc)
 - [.bashrc](./etc/.bashrc)  
 - [.emacs](./etc/.emacs) 
-- [.guile](./etc/.guile) 
+- [.guile](./etc/.guile)
+- [.sbclrc](./etc/.sbclrc)
+- [stumpwm](./etc/stumpwm)
 - [dwm](./etc/dwm) 
 - [st](./etc/st)
 
