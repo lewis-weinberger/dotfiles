@@ -23,45 +23,6 @@
 ;;; Code:
 
 
-;; GENERAL ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-;; Miscellaneous settings
-(setq python-indent-offset 4)
-(setq c-default-style "linux" c-basic-offset 4)
-(setq ispell-dictionary "british")
-(setq inhibit-startup-screen t)
-(setq mouse-autoselect-window t)
-(setq org-agenda-files '("~/Documents/Notes/"))
-(setq frame-resize-pixelwise t)
-
-;; Appearance
-(setq-default cursor-type 'bar)
-(column-number-mode t)
-(scroll-bar-mode -1)
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(set-face-attribute 'fringe nil :background nil)
-(modify-all-frames-parameters
- '((font . "Roboto Mono-14")
-   (internal-border-width . 16)))
-
-;; Custom bindings
-(global-set-key (kbd "C-c e") 'eshell)
-(global-set-key (kbd "C-c ^") 'master-window)
-(global-set-key (kbd "C-c }") 'master-window-horizontally)
-(global-set-key (kbd "C-c <up>") 'select-line-up)
-(global-set-key (kbd "C-c <down>") 'select-line-down)
-(global-set-key (kbd "C-c i") 'string-insert-rectangle)
-(global-set-key (kbd "C-c p") 'password-store-copy)
-(global-set-key (kbd "C-c a") 'org-agenda)
-(global-set-key (kbd "C-c r") 'eval-region)
-
-;; Hooks
-(add-hook 'text-mode-hook #'turn-on-flyspell)
-(add-hook 'org-mode-hook (lambda () (set-input-method "TeX")))
-
-
 ;; FUNCTIONS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
@@ -88,6 +49,60 @@
   (set-mark (line-beginning-position))
   (forward-line)
   (activate-mark))
+
+
+;; MACROS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+(defmacro if-system (system &rest body)
+  "Evaluate BODY only on SYSTEM"
+  (declare (indent defun))
+  `(when (string-equal system-type ,system)
+     ,@body))
+
+
+;; GENERAL ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;; Miscellaneous settings
+(setq python-indent-offset 4)
+(setq c-default-style "linux" c-basic-offset 4)
+(setq ispell-dictionary "british")
+(setq inhibit-startup-screen t)
+(setq mouse-autoselect-window t)
+(setq org-agenda-files '("~/Documents/Notes/"))
+(setq frame-resize-pixelwise t)
+
+;; Appearance
+(setq-default cursor-type 'bar)
+(column-number-mode t)
+(scroll-bar-mode -1)
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(set-face-attribute 'fringe nil :background nil)
+(modify-all-frames-parameters
+ '((font . "Roboto Mono-14")
+   (internal-border-width . 16)))
+
+;; MacOS specific
+(if-system "darwin"
+  (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
+  (setq exec-path (append exec-path '("/usr/local/bin"))))
+
+;; Custom bindings
+(global-set-key (kbd "C-c e") 'eshell)
+(global-set-key (kbd "C-c ^") 'master-window)
+(global-set-key (kbd "C-c }") 'master-window-horizontally)
+(global-set-key (kbd "C-c <up>") 'select-line-up)
+(global-set-key (kbd "C-c <down>") 'select-line-down)
+(global-set-key (kbd "C-c i") 'string-insert-rectangle)
+(global-set-key (kbd "C-c p") 'password-store-copy)
+(global-set-key (kbd "C-c a") 'org-agenda)
+(global-set-key (kbd "C-c r") 'eval-region)
+
+;; Hooks
+(add-hook 'text-mode-hook #'turn-on-flyspell)
+(add-hook 'org-mode-hook (lambda () (set-input-method "TeX")))
 
 
 ;; PACKAGES ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -119,7 +134,14 @@
   :config (which-key-mode 1))
 
 (use-package slime
-  :init (setq inferior-lisp-program "sbcl"))
+  :init
+  (setq inferior-lisp-program "sbcl")
+  (load (expand-file-name "~/quicklisp/slime-helper.el")))
+
+(use-package geiser
+  :init
+  (if-system "darwin"
+    (setq geiser-racket-binary "/Applications/Racket v7.5/bin/racket")))
 
 (use-package ido
   :init
@@ -127,5 +149,8 @@
   (setq ido-everywhere t)
   (ido-mode 1))
 
+(use-package acme-theme
+  :config
+  (load-theme 'acme t))
 
 ;;; .emacs ends here
