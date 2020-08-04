@@ -79,9 +79,8 @@
 (scroll-bar-mode -1)
 (menu-bar-mode -1)
 (tool-bar-mode -1)
-(set-face-attribute 'fringe nil :background nil)
 (modify-all-frames-parameters
- '((font . "Roboto Mono-14")
+ '((font . "xos4 Terminus")
    (internal-border-width . 16)))
 
 ;; MacOS specific
@@ -149,8 +148,9 @@
   (setq ido-everywhere t)
   (ido-mode 1))
 
-(use-package acme-theme
+(use-package base16-theme
   :config
-  (load-theme 'acme t))
+  (load-theme 'base16-tomorrow-night-eighties t)
+  (set-face-attribute 'fringe nil :background nil))
 
 ;;; .emacs ends here

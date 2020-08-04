@@ -8,6 +8,8 @@ See also [lewis-weinberger/rice](https://github.com/lewis-weinberger/rice).
 - [.emacs](./etc/.emacs) 
 - [.guile](./etc/.guile)
 - [.sbclrc](./etc/.sbclrc)
+- [.alacritty.yml](./etc/.alacritty.yml)
+- [fish](./etc/fish)
 - [stumpwm](./etc/stumpwm)
 - [dwm](./etc/dwm) 
 - [st](./etc/st)

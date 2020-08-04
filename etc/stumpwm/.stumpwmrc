@@ -50,12 +50,7 @@
 
 (load-module "mem")
 
-(load-module "ttf-fonts")
-(set-font (make-instance 'xft:font
-	   :family "Roboto Mono"
-	   :subfamily "Regular"
-	   :size 11
-	   :antialias t))
+(set-font "xos4 Terminus") ; don't need ttf contrib for bitmap fonts
 
 ;;
 ;; Modeline -------------------------------------------------------------------
@@ -78,7 +73,7 @@
  *group-format* "%s%t"
  *mode-line-timeout* 1
  *mode-line-position* :top
- *mode-line-foreground-color* "#9EEEEE"
+ *mode-line-foreground-color* "#CCCCCC"
  *mode-line-background-color* "#4E4E4E"
  *mode-line-border-color* "#4E4E4E"
  *screen-mode-line-format*
@@ -107,7 +102,7 @@
 
 (defcommand terminal-emulator () ()
   "run terminal emulator"
-  (run-or-raise "st -e /usr/bin/rcsh -l" '(:class "st-256color")))
+  (run-or-raise "alacritty" '(:class "Alacritty")))
   
 (defcommand lock-screen () ()
   "run xscreensaver-command"
@@ -136,12 +131,7 @@
     '(("(Firefox|Thunderbird)"
        ("M-w" . "C-c")
        ("C-w" . "C-x")
-       ("C-y" . "C-v"))
-      ("(st-256color)"
-       ("M-w" . "C-C")
-       ("C-w" . "C-X")
-       ("C-y" . "C-V"))))
-
+       ("C-y" . "C-v"))))
 
 ;;
 ;; Hooks ----------------------------------------------------------------------
