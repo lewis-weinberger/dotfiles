@@ -1,0 +1,32 @@
+#!/bin/sh
+
+# SXHKD ----------------------------------------------------------------------
+
+pgrep -x sxhkd > /dev/null || sxhkd &
+
+# BSPC -----------------------------------------------------------------------
+
+bspc monitor -d I II III IV V VI
+bspc config normal_border_color   "#9EEEEE"
+bspc config focused_border_color  "#55AAAA"
+bspc config border_width          4
+bspc config window_gap            16
+bspc config split_ratio           0.52
+bspc config borderless_monocle    true
+bspc config gapless_monocle       true
+bspc config focus_follows_pointer true
+
+# BACKGROUND AND STATUS-BAR --------------------------------------------------
+
+xsetroot -solid grey30
+
+while true; do
+    WIFI="$(iw wlp4s0 station dump | awk '/signal:/{ print $2"dBm" }')"
+    CPU="$(mpstat 1 1 | awk '/Average/{ printf("%.1f%"), 100 - $12 }')"
+    TIME="$(date +"%H:%M:%S")"
+    DATE="$(date +"%d/%m/%Y")"
+    MEM="$(free | awk '/Mem/{ printf("%.1f%"), (1.0 - $7/$2) * 100.0 }')"
+    SOUND="$(amixer get Master | awk '/Mono/{ printf $4 }' | tr -d '[]')"
+    TEMP="$(awk '{ print $1/1000"C" }' < /sys/devices/virtual/thermal/thermal_zone2/temp)"
+    echo " cpu $CPU | mem $MEM | net $WIFI | aud $SOUND | tmp $TEMP | $TIME | $DATE" 
+done | lemonbar -p -B "#4E4E4E" -F "#9EEEEE" -b -f "-b&h-lucidatypewriter-*"
