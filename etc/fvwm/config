@@ -1,0 +1,209 @@
+##################################
+#  ____________________________
+# (   _________________________)
+#  ) (__  _  _  _    _
+# (   __)( \/ )( \/\/ )/\/\
+#  ) (    \  /  \    //    \
+# (___)    \/    \/\/(_/\/\_) 2.6
+#
+#
+#  This is a customised fvwm configuration,
+#  based on the default configuration, which
+#  includes styling based on redmond98 (see
+#  https://www.fvwm.org/Wiki/Decor/Redmond98)
+#  and tiling functions (see
+#  https://wiki.archlinux.org/index.php/FVWM)
+#
+#  This config file is organized as follows:
+#
+#    1: Functions
+#    2: Styles
+#    3: Colorsets
+#    4: Menus
+#    5: Bindings
+#    6: Decor
+#    7: Modules
+#
+#################################
+
+InfoStoreAdd terminal alacritty
+
+#################################
+# 1: Functions                                                                
+#################################
+
+DestroyFunc StartFunction
+AddToFunc   StartFunction
++ I Exec exec xsetroot -solid "#008080"
+
+DestroyFunc TileLeft
+AddToFunc TileLeft
++ I ThisWindow (!Shaded, !Iconic) Maximize 50 100
++ I ThisWindow (Maximized, !Shaded, !Iconic) Move +0 +0
+
+DestroyFunc TileRight
+AddToFunc TileRight
++ I ThisWindow (!Shaded, !Iconic) Maximize 50 100
++ I ThisWindow (Maximized, !Shaded, !Iconic) Move -0 +0
+
+#################################
+# 2: Styles 
+#################################
+
+DesktopName 0 1
+DesktopName 1 2
+DesktopName 2 3
+DesktopName 3 4
+DesktopSize 1x1
+
+ClickTime 350
+MoveThreshold 3
+OpaqueMoveSize -1
+HideGeometryWindow
+XorValue 55555
+
+DefaultFont "xft:B&H Lucida:style=Sans Bold:pixelsize=12:antialias=true"
+
+Style AppClass MiniIcon "img.png"
+Style * ClickToFocus
+Style * TileCascadePlacement, !UsePPosition
+Style * ResizeOpaque, SnapAttraction 15 SameType ScreenAll, SnapGrid
+Style * Colorset 1, HilightColorset 2, \
+        BorderColorset 3, HilightBorderColorset 4, \
+        BorderWidth 5, HandleWidth 5, \
+        FvwmBorder, FirmBorder, \
+        MWMButtons, UseDecor Redmond98Decor
+
+#################################
+# 3: Colorsets
+#################################
+
+Colorset 1 fg white, bg grey51
+Colorset 2 fg white, bg Blue3, hi #40B0F0
+Colorset 3 fg white, bg #c3c3c3
+Colorset 4 fg white, bg #c3c3c3
+Colorset 5 fg black, bg grey80
+Colorset 6 fg white, bg Blue3, hi #40B0F0
+Colorset 7 fg grey60, bg grey60
+
+#################################
+# 4: Menus
+#################################
+
+MenuStyle * MenuColorset 5, ActiveColorset 6, GreyedColorset 7
+MenuStyle * Hilight3DOff, HilightBack, HilightTitleBack, SeparatorsLong
+MenuStyle * TrianglesSolid, TrianglesUseFore
+MenuStyle * ItemFormat "%|%3.1i%5.3l%5.3>%|"
+MenuStyle * Font "xft:B&H Lucida:style=Sans Bold:pixelsize=12:antialias=true"
+
+# Root Menu
+DestroyMenu MenuFvwmRoot
+AddToMenu   MenuFvwmRoot "Menu" Title
++ "Programs%icons/programs.png%" Popup MenuPrograms
++ "" Nop
++ "Refresh%icons/refresh.png%" Refresh
++ "Restart%icons/restart.png%" Restart
++ "Quit%icons/quit.png%" Module FvwmScript FvwmScript-ConfirmQuit
+
+# Programs Menu
+DestroyMenu MenuPrograms
+AddToMenu   MenuPrograms "Programs" Title
+Test (x $[infostore.terminal]) + "terminal" Exec exec $[infostore.terminal]
+Test (x firefox) + "firefox" Exec exec firejail firefox
+Test (x thunderbird) + "thunderbird" Exec exec firejail thunderbird
+Test (x dmenu_run) + "dmenu" Exec exec dmenu_run
+Test (x passmenu) + "pass" Exec exec passmenu
+Test (x emacs) + "emacs" Exec exec emacs
+
+# Window Operations Menus
+DestroyMenu MenuWindowOps
+AddToMenu   MenuWindowOps
++ "Move"      Move
++ "Resize"    Resize
++ "Iconify"   Iconify
++ "Maximize"  Maximize
++ "Shade"     WindowShade
++ "Stick"     Stick
++ "" Nop
++ "Close"     Close
+
+#################################
+# 5: Mouse and Key bindings
+#################################
+
+Mouse 1 2 A Close
+Mouse 1 4 A Maximize
+Mouse 1 6 A Iconify
+Mouse 1	R A Menu MenuWindowOps
+Mouse 2	R A WindowList
+Mouse 3	R A Menu MenuFvwmRoot
+
+# Alt-F1 or Menu to load the root menu and Alt-Tab for a WindowList.
+# Ctrl-F1/F2/F3/F4 will switch between the Virtual Desktops.
+# Shift-Windows-Enter will launch a terminal.
+# Windows-Left/Right will tile left/right.
+# Windows-L will lock screen
+# Windows-R will execute dmenu
+# Windows-P will execute passmenu
+Silent Key F1 A M Menu MenuFvwmRoot
+Silent Key Menu A A Menu MenuFvwmRoot
+Silent Key Tab A M WindowList Root c c NoDeskSort, SelectOnRelease Meta_L
+Silent Key F1 A C GotoDesk 0 0
+Silent Key F2 A C GotoDesk 0 1
+Silent Key F3 A C GotoDesk 0 2
+Silent Key F4 A C GotoDesk 0 3
+Silent Key Return A S4 Exec exec $[infostore.terminal]
+Silent Key l A 4 Exec exec xscreensaver-command -lock
+Silent Key r A 4 Exec exec dmenu_run
+Silent Key p A 4 Exec exec dmenu_run
+Silent Key Left A 4 TileLeft
+Silent Key Right A 4 TileRight
+
+#################################
+# 6: Window Decor
+#################################
+
+# Redmond98 -- requires button images
+# https://www.fvwm.org/Wiki/Decor/Redmond98/decor-redmond98.tar.gz
+AddToDecor Redmond98Decor
++ TitleStyle AllInactive Solid grey51
++ TitleStyle Active      HGradient 128 Blue4 DeepSkyBlue
++ ButtonStyle All Simple -- UseTitleStyle
++ AddButtonStyle All   AllInactive Solid grey51
++ AddButtonStyle Left  AllActive   Solid Blue4
++ AddButtonStyle Right AllActive   Solid DeepSkyBlue
++ BorderStyle Simple -- HiddenHandles NoInset Raised
++ TitleStyle      LeftJustified
++ TitleStyle      -- Flat
++ ButtonStyle     All -- Flat
++ AddButtonStyle 1 MiniIcon
++ AddButtonStyle 2 ActiveUp   Pixmap redmond98/win-window-close.png
++ AddButtonStyle 2 ActiveDown Pixmap redmond98/win-window-close-pressed.png
++ AddButtonStyle 2 Inactive   Pixmap redmond98/win-window-close.png
++ AddButtonStyle 4 ActiveUp   Pixmap redmond98/win-window-maximize.png
++ AddButtonStyle 4 ActiveDown Pixmap redmond98/win-window-maximize-pressed.png
++ AddButtonStyle 4 Inactive   Pixmap redmond98/win-window-maximize.png
++ AddButtonStyle 6 ActiveUp   Pixmap redmond98/win-window-iconify.png -- Right flat
++ AddButtonStyle 6 ActiveDown Pixmap redmond98/win-window-iconify-pressed.png -- Right flat
++ AddButtonStyle 6 Inactive   Pixmap redmond98/win-window-iconify.png -- Right flat
++ AddButtonStyle 4 ToggledActiveUp   Pixmap redmond98/win-window-restore.png
++ AddButtonStyle 4 ToggledActiveDown Pixmap redmond98/win-window-restore-pressed.png
++ AddButtonStyle 4 ToggledInactive   Pixmap redmond98/win-window-restore.png
++ ButtonStyle All - Clear
++ ButtonStyle 1 - MwmDecorMenu
++ ButtonStyle 6 - MwmDecorMin
++ ButtonStyle 4 - MwmDecorMax
++ TitleStyle Height 20
+
+#################################
+# 7: Modules
+#################################
+
+# FvwmScript
+#
+# FvwmScript is a module that allows one to write custom desktop
+# widgets and various other tools. This config uses one FvwmScript.
+#   - Quit - This is a popup that asks for quit confirmation before
+#     quitting fvwm.
+DestroyModuleConfig FvwmScript:*
+*FvwmScript: DefaultColorset 4
