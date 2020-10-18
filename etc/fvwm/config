@@ -155,7 +155,7 @@ Silent Key F4 A C GotoDesk 0 3
 Silent Key Return A S4 Exec exec $[infostore.terminal]
 Silent Key l A 4 Exec exec xscreensaver-command -lock
 Silent Key r A 4 Exec exec dmenu_run
-Silent Key p A 4 Exec exec dmenu_run
+Silent Key p A 4 Exec exec passmenu
 Silent Key Left A 4 TileLeft
 Silent Key Right A 4 TileRight
 
@@ -206,4 +206,4 @@ AddToDecor Redmond98Decor
 #   - Quit - This is a popup that asks for quit confirmation before
 #     quitting fvwm.
 DestroyModuleConfig FvwmScript:*
-*FvwmScript: DefaultColorset 4
+*FvwmScript: DefaultColorset 5
