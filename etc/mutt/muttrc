@@ -1,0 +1,51 @@
+# General settings
+set header_cache = "~/.cache/mutt"
+set imap_check_subscribed
+set imap_keepalive = 300
+unset imap_passive
+set mail_check = 120
+set menu_scroll = yes
+set editor="emacs -q -nw -f mail-mode"
+set send_charset="utf-8"
+set assumed_charset="iso-8859-1"
+
+# Accounts
+source "gpg --decrypt --quiet ~/.mutt/passwords.gpg |"
+source "~/.mutt/personal"
+folder-hook $folder "source ~/.mutt/personal"
+
+# Sidebar
+set sidebar_visible = yes
+set sidebar_width = 15
+set sidebar_folder_indent = yes
+set sidebar_short_path = yes
+
+# Headers
+ignore *
+unignore From To Cc Bcc Date Subject
+
+# Key bindings
+bind index,pager \CN sidebar-next
+bind index,pager \CP sidebar-prev
+bind index,pager \CO sidebar-open
+
+# Macros
+macro attach 'V' "<pipe-entry>iconv -c --to-code=UTF8 > ~/Downloads/mail.html<enter><shell-escape>firefox ~/Downloads/mail.html<enter><shell-escape>rm ~/Downloads/mail.html<enter>"
+
+# Colours
+color normal      white          black
+color hdrdefault  green          default
+color quoted      green          default
+color quoted1     yellow         default
+color quoted2     red            default
+color signature   cyan           default
+color indicator   brightyellow   red
+color error       brightred      default
+color status      brightwhite    blue
+color tree        brightmagenta  black
+color tilde       blue           default
+color attachment  brightyellow   default
+color markers     brightred      default
+color message     white          black
+color search      brightwhite    magenta
+color bold        brightyellow   default
