@@ -1,0 +1,21 @@
+# Keybindings
+bind s-Return exec /usr/bin/alacritty
+bind s-f exec /usr/bin/firejail /usr/bin/firefox
+bind e exec /usr/local/bin/emacs
+bind s-l exec /usr/bin/xscreensaver-command -lock
+bind s-p exec /usr/bin/passmenu
+bind s-r exec /usr/bin/rofi -font "unifont 12" -theme "sidebar" -show run
+bind s-t exec /usr/bin/ratpoison -c "echo $(/usr/local/bin/status.sh)"
+
+# Startup 
+exec /usr/bin/xsetroot -solid grey30
+exec /usr/bin/sloppy
+exec /usr/bin/rpws init 4 -k
+
+# Appearance 
+set font unifont-11
+set border 5
+set fgcolor white
+set bgcolor grey30
+set fwcolor grey35
+set bwcolor grey30
