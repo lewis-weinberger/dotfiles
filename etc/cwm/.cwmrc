@@ -1,0 +1,56 @@
+# Calm Window Manager config
+
+# Appearance (Plan 9 inspired)
+fontname "unifont:pixelsize=16"
+borderwidth 5
+color activeborder "#55AAAA"
+color inactiveborder "#9EEEEE"
+color font "#000000"
+color selfont "#FFFFFF"
+color menubg "#E9FFE9"
+color menufg "#88CC88"
+
+# Application menu
+command browser "firejail firefox"
+command editor "alacritty -e vis"
+command email "alacritty -e mutt"
+command term alacritty
+command lock "xscreensaver-command -lock"
+
+# Keybindings
+unbind-key all
+bind-key 4-Return terminal
+bind-key 4-l lock
+bind-key 4-m menu-exec
+bind-key 4-Left window-vtile
+bind-key 4-Up window-htile
+bind-key 4-k window-close
+bind-key 4-p passmenu
+bind-key 4-f "firejail firefox"
+bind-key 4-e "alacritty -e vis"
+bind-key 4S-q quit
+bind-key 4S-r restart
+bind-key 4-n window-cycle
+bind-key 4S-n window-rcycle
+bind-key 4-1 group-only-1
+bind-key 4-2 group-only-2
+bind-key 4-3 group-only-3
+bind-key 4-4 group-only-4
+bind-key 4S-1 window-movetogroup-1
+bind-key 4S-2 window-movetogroup-2
+bind-key 4S-3 window-movetogroup-3
+bind-key 4S-4 window-movetogroup-4
+
+# Mousebindings
+unbind-mouse all
+bind-mouse "1" menu-window
+bind-mouse "2" menu-group
+bind-mouse "3" menu-cmd
+bind-mouse 4-1 window-move
+bind-mouse 4-3 window-resize
+bind-mouse 4-4 group-rcycle
+bind-mouse 4-5 group-cyle
+
+# Misc
+sticky yes
+snapdist 8

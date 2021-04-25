@@ -7,37 +7,25 @@ window:
 
 font:
   normal:
-    family: xos4 Terminus
+    family: GNU Unifont
+
+  bold:
+    style: Regular
 
   size: 11.0
 
-colors: # Tomorrow Night Eighties
+colors:
   primary:
-    background: '0x2d2d2d'
-    foreground: '0xcccccc'
-
-  cursor:
-    text: '0x2d2d2d'
-    cursor: '0xcccccc'
-
+    background: '0xe5e5d3'
+    foreground: '0x000000'
   normal:
-    black:   '0x2d2d2d'
-    red:     '0xf2777a'
-    green:   '0x99cc99'
-    yellow:  '0xffcc66'
-    blue:    '0x6699cc'
-    magenta: '0xcc99cc'
-    cyan:    '0x66cccc'
-    white:   '0xcccccc'
-
-  bright:
-    black:   '0x999999'
-    red:     '0xf99157'
-    green:   '0x393939'
-    yellow:  '0x515151'
-    blue:    '0xb4b7b4'
-    magenta: '0xe0e0e0'
-    cyan:    '0xa3685a'
-    white:   '0xffffff'
+    black:   '0x073642'
+    red:     '0xdc322f'
+    green:   '0x208000'
+    yellow:  '0x806000'
+    blue:    '0x2072ac'
+    magenta: '0xd33682'
+    cyan:    '0x1f7a72'
+    white:   '0xeee8d5'
 
 draw_bold_text_with_bright_colors: false
