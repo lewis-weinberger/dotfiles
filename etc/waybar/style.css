@@ -1,0 +1,25 @@
+* {
+  font-family: "spleen", "Font Awesome 6 Free", sans-serif;
+  font-size: 16px;
+  border: none;
+  border-radius: 0;
+  padding: 0 5px;
+  margin: 0 4px;
+}
+
+window#waybar {
+  background: transparent;
+  color: #fce8c3;
+}
+
+#workspaces button {
+    padding: 0 5px;
+    background: transparent;
+    color: #baa67f;
+    border-top: 2px solid transparent;
+}
+
+#workspaces button.focused {
+    color: #fce8c3;
+    border-top: 2px solid #fce8c3;
+}
